@@ -1,33 +1,35 @@
+FROM node:24-alpine
 
-FROM node:18-alpine
-
-# Install necessary packages including sudo, shadow, Python, Java 17, C++, and C
+# Install system packages
 RUN apk add --no-cache sudo shadow python3 openjdk17 gcc g++ musl-dev
 
+# Create app directory
 WORKDIR /usr/src/app
 
 # Install pnpm globally
 RUN npm install -g pnpm
 
-# Copy package files
+# Copy only lockfile and manifest for faster rebuilds
 COPY package.json pnpm-lock.yaml ./
 
 # Install dependencies
 RUN pnpm install --frozen-lockfile
 
-# Copy source code
+# Copy source files
 COPY . .
 
-# Create a new user and set the password
-RUN useradd -m username && echo 'username:password' | chpasswd
+# Set production environment
+ENV NODE_ENV=production
 
-# Grant the new user sudo privileges
-RUN adduser username wheel && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+# Build the TypeScript code
+RUN pnpm build
 
-# Switch to the new user
+# Use a non-root user (optional, safer)
+RUN useradd -m username && echo 'username:password' | chpasswd && \
+    adduser username wheel && echo '%wheel ALL=(ALL) NOPASSWD: ALL' >> /etc/sudoers
+
 USER username
 
+# Expose port and run compiled app
 EXPOSE 3000
-
-# Use tsx to run TypeScript directly
-CMD ["pnpm", "dev"]
+CMD ["pnpm", "start"]
