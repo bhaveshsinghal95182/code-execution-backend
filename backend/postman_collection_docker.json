@@ -1,0 +1,228 @@
+{
+  "info": {
+    "name": "Code Execution API (Docker)",
+    "description": "Collection for testing the code execution API with different programming languages. Works with both local and Docker environments.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "localhost:8080",
+      "type": "string",
+      "description": "Base URL for the API. Change to your Docker container IP if needed."
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Python3 - Hello World",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"python3\",\n  \"code\": \"print(\\\"Hello, World!\\\")\\nfor i in range(3):\\n    print(f\\\"Count: {i}\\\")\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Python3 - Math Operations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"python3\",\n  \"code\": \"import math\\n\\nx = 10\\ny = 5\\nprint(f\\\"Addition: {x + y}\\\")\\nprint(f\\\"Multiplication: {x * y}\\\")\\nprint(f\\\"Square root of {x}: {math.sqrt(x)}\\\")\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "JavaScript - Hello World",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"javascript\",\n  \"code\": \"console.log(\\\"Hello from Node.js!\\\");\\nfor(let i = 0; i < 3; i++) {\\n    console.log(`Count: ${i}`);\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "JavaScript - Array Operations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"javascript\",\n  \"code\": \"const numbers = [1, 2, 3, 4, 5];\\nconsole.log(\\\"Original array:\", numbers);\\nconsole.log(\\\"Sum:\", numbers.reduce((a, b) => a + b, 0));\\nconsole.log(\\\"Doubled:\", numbers.map(n => n * 2));\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Java - Hello World",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"java\",\n  \"code\": \"public class Main {\\n    public static void main(String[] args) {\\n        System.out.println(\\\"Hello from Java!\\\");\\n        for(int i = 0; i < 3; i++) {\\n            System.out.println(\\\"Count: \\\" + i);\\n        }\\n    }\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Java - String Operations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"java\",\n  \"code\": \"public class Main {\\n    public static void main(String[] args) {\\n        String text = \\\"Hello World\\\";\\n        System.out.println(\\\"Original: \\\" + text);\\n        System.out.println(\\\"Length: \\\" + text.length());\\n        System.out.println(\\\"Uppercase: \\\" + text.toUpperCase());\\n        System.out.println(\\\"Lowercase: \\\" + text.toLowerCase());\\n    }\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "C++ - Hello World",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"cpp\",\n  \"code\": \"#include <iostream>\\nint main() {\\n    std::cout << \\\"Hello from C++!\\\" << std::endl;\\n    for(int i = 0; i < 3; i++) {\\n        std::cout << \\\"Count: \\\" << i << std::endl;\\n    }\\n    return 0;\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "C++ - Math Operations",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"cpp\",\n  \"code\": \"#include <iostream>\\n#include <cmath>\\nint main() {\\n    double x = 10.0;\\n    double y = 5.0;\\n    std::cout << \\\"Addition: \\\" << x + y << std::endl;\\n    std::cout << \\\"Multiplication: \\\" << x * y << std::endl;\\n    std::cout << \\\"Square root of \\\" << x << \\\": \\\" << sqrt(x) << std::endl;\\n    return 0;\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Error Test - Invalid Language",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"invalid_language\",\n  \"code\": \"print(\\\"This should fail\\\")\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{base_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    }
+  ]
+} 
