@@ -1,0 +1,118 @@
+{
+  "info": {
+    "name": "Code Execution API - Single Server",
+    "description": "Collection for testing the code execution API with server running on port 3000",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "server_url",
+      "value": "http://68.183.84.166:3000",
+      "type": "string",
+      "description": "Server URL (Port 3000)"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{server_url}}/",
+          "protocol": "http",
+          "host": ["{{server_url}}"],
+          "path": [""]
+        }
+      }
+    },
+    {
+      "name": "Python3 Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"python3\",\n  \"code\": \"print(\\\"Hello from Server!\\\")\\nfor i in range(3):\\n    print(f\\\"Count: {i}\\\")\"\n}"
+        },
+        "url": {
+          "raw": "{{server_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{server_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "JavaScript Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"javascript\",\n  \"code\": \"console.log(\\\"Hello from Server!\\\");\\nfor(let i = 0; i < 3; i++) {\\n    console.log(`Count: ${i}`);\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{server_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{server_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "Java Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"java\",\n  \"code\": \"public class Main {\\n    public static void main(String[] args) {\\n        System.out.println(\\\"Hello from Server!\\\");\\n        for(int i = 0; i < 3; i++) {\\n            System.out.println(\\\"Count: \\\" + i);\\n        }\\n    }\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{server_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{server_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    },
+    {
+      "name": "C++ Test",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"language\": \"cpp\",\n  \"code\": \"#include <iostream>\\nint main() {\\n    std::cout << \\\"Hello from Server!\\\" << std::endl;\\n    for(int i = 0; i < 3; i++) {\\n        std::cout << \\\"Count: \\\" << i << std::endl;\\n    }\\n    return 0;\\n}\"\n}"
+        },
+        "url": {
+          "raw": "{{server_url}}/api/execute",
+          "protocol": "http",
+          "host": ["{{server_url}}"],
+          "path": ["api", "execute"]
+        }
+      }
+    }
+  ]
+} 
