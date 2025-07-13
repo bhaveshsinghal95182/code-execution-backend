@@ -79,7 +79,7 @@ app.post("/api/execute", async (req, res) => {
         break;
       }
 
-      case "python3": {
+      case "python": {
         const pyFilePath = path.join(tempDir, "script.py");
 
         await execShellCommand(
