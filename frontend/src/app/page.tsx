@@ -17,7 +17,7 @@ export default function Home() {
             <p className="text-lg leading-relaxed">
               Hello, Mehul Sir, thank you once again for giving me the opportunity to
               work on this project. This was my first time sshing into a server and
-              running a code on it. I learned a lot from this project and I'm grateful
+              running a code on it. I learned a lot from this project and I&apos;m grateful
               to you for giving me this opportunity.
             </p>
           </div>
@@ -82,7 +82,7 @@ export default function Home() {
           </div>
 
           <div className="text-center">
-            <p className="text-lg mb-4">I'm attaching the code for this project below:</p>
+            <p className="text-lg mb-4">I&apos;m attaching the code for this project below:</p>
             <Button size="lg" className="bg-gray-600 hover:bg-gray-700 text-white">
               <Link href="https://github.com/bhaveshsinghal95182/code-execution-backend">
                 View on GitHub
@@ -92,7 +92,7 @@ export default function Home() {
         </div>
         <div className="text-center space-y-4 pt-8 border-t border-gray-700">
           <p className="text-lg text-gray-300">
-            Hope you like my work and I'm looking forward to the interview.
+            Hope you like my work and I&apos;m looking forward to the interview.
           </p>
           <p className="text-gray-300">
             Thank you once again for giving me the opportunity to work on this project.
