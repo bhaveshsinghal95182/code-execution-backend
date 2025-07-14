@@ -49,25 +49,25 @@ export default function Home() {
       <div className="flex px-0">
         <div className="flex flex-col gap-2 items-center justify-center bg-[#1e1e1e] p-0">
           <Button
-            className="bg-white text-black hover:bg-gray-500"
+            className={`bg-white text-black hover:bg-gray-500 ${language === "javascript" ? "ring-2 ring-blue-500" : ""}`}
             onClick={() => setLanguage("javascript")}
           >
             JavaScript
           </Button>
           <Button
-            className="bg-white text-black hover:bg-gray-500"
+            className={`bg-white text-black hover:bg-gray-500 ${language === "cpp" ? "ring-2 ring-blue-500" : ""}`}
             onClick={() => setLanguage("cpp")}
           >
             C++
           </Button>
           <Button
-            className="bg-white text-black hover:bg-gray-500"
+            className={`bg-white text-black hover:bg-gray-500 ${language === "python" ? "ring-2 ring-blue-500" : ""}`}
             onClick={() => setLanguage("python")}
           >
             Python
           </Button>
           <Button
-            className="bg-white text-black hover:bg-gray-500"
+            className={`bg-white text-black hover:bg-gray-500 ${language === "java" ? "ring-2 ring-blue-500" : ""}`}
             onClick={() => setLanguage("java")}
           >
             Java
