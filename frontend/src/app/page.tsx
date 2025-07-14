@@ -15,24 +15,51 @@ export default function Home() {
         <div className="bg-gray-800 rounded-lg p-8 space-y-6">
           <div className="prose prose-invert max-w-none">
             <p className="text-lg leading-relaxed">
-              Hello, Mehul Sir, thank you once again for giving me the opportunity to
-              work on this project. This was my first time sshing into a server and
-              running a code on it. I learned a lot from this project and I&apos;m grateful
-              to you for giving me this opportunity.
+              Hello, Mehul Sir, thank you once again for giving me the
+              opportunity to work on this project. This was my first time sshing
+              into a server and running a code on it. I learned a lot from this
+              project and I&apos;m grateful to you for giving me this
+              opportunity.
             </p>
           </div>
 
           <div className="text-center">
             <p className="text-lg mb-4">Here is the link to working project:</p>
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
               <Link href="/code-execution">Code Execution</Link>
             </Button>
+          </div>
+
+          <div className="bg-yellow-800 border-l-4 border-yellow-500 rounded-lg p-6 my-4">
+            <h3 className="text-lg font-semibold text-yellow-200 mb-2">
+              Important: Backend Certificate Notice
+            </h3>
+            <p className="text-yellow-100">
+              To allow the frontend to make API requests to the backend, you
+              must first visit{" "}
+              <a
+                href="https://server.bhaveshsinghal.xyz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline font-semibold"
+              >
+                server.bhaveshsinghal.xyz
+              </a>{" "}
+              in your browser and accept the security warning. This is necessary
+              because the backend uses a self-signed SSL certificate. If you
+              skip this step, you may encounter a certificate authority error
+              when the frontend tries to communicate with the backend.
+            </p>
           </div>
 
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-white">Architecture</h2>
             <p className="text-gray-300">
-              This is the architectural diagram that I used to build this project:
+              This is the architectural diagram that I used to build this
+              project:
             </p>
             <div className="flex justify-center">
               <Image
@@ -45,45 +72,73 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="bg-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">Implementation Notes</h3>
-              <p className="text-gray-300 leading-relaxed">
-                Although when I got to actually implementing the code, I found that the
-                code was not as scalable as I thought it would be. I had to make a lot of
-                changes to the code to make it more scalable and not only that, I had to
-                minimise the scale of this project because I was getting scope creeped.
-
-                SO, the current implementation looks something like this:
-                <Image src="/small.png" alt="Architectural Diagram" width={1000} height={1000} />
-              </p>
-            </div>
-
-            <div className="bg-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">System Overview</h3>
-              <p className="text-gray-300 leading-relaxed">
-                The Idea of this code execution platform is simple. It uses one main
-                container with node 24 alpine image and for each execution, a new user
-                with limited resources is created that would first save the code, run it
-                and then the user and its files are deleted.
-              </p>
-            </div>
-
-            <div className="bg-gray-700 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-white mb-4">Technology Stack</h3>
-              <ul className="text-gray-300 space-y-2">
-                <li>• <strong>Frontend:</strong> Next.js with TypeScript</li>
-                <li>• <strong>Backend:</strong> Express.js with TypeScript</li>
-                <li>• <strong>Containerization:</strong> Docker with Node 24 Alpine and other languages support</li>
-                <li>• <strong>Deployment:</strong> Vercel (Frontend) + VPS (Backend)</li>
-                <li>• <strong>Infrastructure:</strong> Nginx, SSL certificates</li>
-              </ul>
-            </div>
+          <div className="space-y-6"></div>
+          <div className="bg-gray-700 rounded-lg p-6">
+            <h3 className="text-xl font-semibold text-white mb-4">
+              Implementation Notes
+            </h3>
+            <p className="text-gray-300 leading-relaxed">
+              Although when I got to actually implementing the code, I found
+              that the code was not as scalable as I thought it would be. I had
+              to make a lot of changes to the code to make it more scalable and
+              not only that, I had to minimise the scale of this project because
+              I was getting scope creeped. SO, the current implementation looks
+              something like this:
+              <Image
+                src="/small.png"
+                alt="Architectural Diagram"
+                width={1000}
+                height={1000}
+              />
+            </p>
           </div>
 
+          <div className="bg-gray-700 rounded-lg p-6">
+            <h3 className="text-xl font-semibold text-white mb-4">
+              System Overview
+            </h3>
+            <p className="text-gray-300 leading-relaxed">
+              The Idea of this code execution platform is simple. It uses one
+              main container with node 24 alpine image and for each execution, a
+              new user with limited resources is created that would first save
+              the code, run it and then the user and its files are deleted.
+            </p>
+          </div>
+
+          <div className="bg-gray-700 rounded-lg p-6">
+            <h3 className="text-xl font-semibold text-white mb-4">
+              Technology Stack
+            </h3>
+            <ul className="text-gray-300 space-y-2">
+              <li>
+                • <strong>Frontend:</strong> Next.js with TypeScript
+              </li>
+              <li>
+                • <strong>Backend:</strong> Express.js with TypeScript
+              </li>
+              <li>
+                • <strong>Containerization:</strong> Docker with Node 24 Alpine
+                and other languages support
+              </li>
+              <li>
+                • <strong>Deployment:</strong> Vercel (Frontend) + VPS (Backend)
+              </li>
+              <li>
+                • <strong>Infrastructure:</strong> Nginx, SSL certificates
+              </li>
+            </ul>
+          </div>
+
+          {/* Certificate Authority Note */}
+
           <div className="text-center">
-            <p className="text-lg mb-4">I&apos;m attaching the code for this project below:</p>
-            <Button size="lg" className="bg-gray-600 hover:bg-gray-700 text-white">
+            <p className="text-lg mb-4">
+              I&apos;m attaching the code for this project below:
+            </p>
+            <Button
+              size="lg"
+              className="bg-gray-600 hover:bg-gray-700 text-white"
+            >
               <Link href="https://github.com/bhaveshsinghal95182/code-execution-backend">
                 View on GitHub
               </Link>
@@ -95,7 +150,8 @@ export default function Home() {
             Hope you like my work and I&apos;m looking forward to the interview.
           </p>
           <p className="text-gray-300">
-            Thank you once again for giving me the opportunity to work on this project.
+            Thank you once again for giving me the opportunity to work on this
+            project.
           </p>
           <div className="text-white">
             <p className="font-semibold">Best Regards,</p>
