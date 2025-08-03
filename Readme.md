@@ -1,6 +1,98 @@
 # Code Execution Platform
 
-A secure, scalable code execution platform that allows users to run code in multiple programming languages with proper isolation and resource management.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js](https://img.shields.io/badge/Node.js-24.x-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Supported-blue.svg)](https://www.docker.com/)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://code-execution.bhaveshsinghal.xyz)
+
+A secure, scalable code execution platform that allows users to run code in multiple programming languages with proper isolation and resource management. This platform provides a web-based code editor with real-time execution capabilities for JavaScript, Python, C++, and Java.
+
+## 📋 Table of Contents
+
+- [✨ Features](#-features)
+- [🚀 Quick Start](#-quick-start)
+- [📋 Prerequisites](#-prerequisites)
+- [⚙️ Installation](#️-installation)
+- [🏗️ Architecture Overview](#️-architecture-overview)
+- [🔒 Security Features](#-security-features)
+- [📚 API Documentation](#-api-documentation)
+- [🐳 Docker Setup](#-docker-setup)
+- [🛠️ Development](#️-development)
+- [🌐 Deployment](#-deployment)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+## ✨ Features
+
+- **Multi-Language Support**: Execute code in JavaScript, Python, C++, and Java
+- **Secure Isolation**: User-based isolation with resource limits
+- **Real-time Execution**: Monaco Editor with live code execution
+- **Docker Support**: Containerized deployment with security constraints
+- **Resource Management**: CPU time and process limits
+- **Professional UI**: Modern web interface built with Next.js
+- **RESTful API**: Simple API for code execution integration
+
+## 🚀 Quick Start
+
+### Using the Live Demo
+Visit [code-execution.bhaveshsinghal.xyz](https://code-execution.bhaveshsinghal.xyz) to try the platform immediately.
+
+### Local Development
+```bash
+# Clone the repository
+git clone https://github.com/bhaveshsinghal95182/code-execution-backend.git
+cd code-execution-backend
+
+# Start with Docker (recommended)
+./start-docker.sh
+
+# Or start manually
+cd backend && npm install && npm run dev
+cd frontend && npm install && npm run dev
+```
+
+### API Usage
+```bash
+curl -X POST http://localhost:3000/api/execute \
+  -H "Content-Type: application/json" \
+  -d '{"code": "console.log(\"Hello World\")", "language": "javascript"}'
+```
+
+## 📋 Prerequisites
+
+- **Node.js**: Version 24.x or higher
+- **Docker**: For containerized deployment
+- **Docker Compose**: For orchestration
+- **Linux/Unix**: Required for user isolation features
+- **Sudo privileges**: For user creation and management
+
+## ⚙️ Installation
+
+### Option 1: Docker (Recommended)
+```bash
+# Using Docker Compose
+docker-compose up --build
+
+# Using the provided script
+chmod +x start-docker.sh
+./start-docker.sh
+```
+
+### Option 2: Manual Installation
+```bash
+# Backend setup
+cd backend
+npm install
+npm run build
+npm start
+
+# Frontend setup (separate terminal)
+cd frontend
+npm install
+npm run build
+npm start
+```
 
 ## 🏗️ Architecture Overview
 
@@ -18,11 +110,18 @@ The platform follows a microservices architecture with the following components:
 - **Security**: User isolation and resource limits
 - **Deployment**: VPS with Nginx and SSL
 
-## 🎯 Backend Architecture & Functionality
+---
 
-### Core Components
+## 📚 Technical Documentation
 
-#### 1. **Main Server (`index.ts`)**
+<details>
+<summary><strong>🏗️ Detailed Architecture & Implementation</strong></summary>
+
+### 🎯 Backend Architecture & Functionality
+
+#### Core Components
+
+##### 1. **Main Server (`index.ts`)**
 The backend is built with Express.js and provides a single API endpoint for code execution:
 
 ```typescript
@@ -44,32 +143,32 @@ POST /api/execute
 }
 ```
 
-#### 2. **Supported Languages**
+##### 2. **Supported Languages**
 The backend supports four programming languages:
 - **JavaScript** (Node.js)
 - **Python** (Python 3)
 - **C++** (GCC compiler)
 - **Java** (OpenJDK 17)
 
-#### 3. **Security & Isolation System**
+##### 3. **Security & Isolation System**
 
-##### User Isolation
+###### User Isolation
 - Each code execution creates a unique user with UUID: `exec_${uuidv4()}`
 - Users are created with limited permissions and resources
 - Automatic cleanup after execution
 
-##### Resource Limits
+###### Resource Limits
 ```bash
 ulimit -t 10    # CPU time limit: 10 seconds
 ulimit -u 40    # Process limit: 40 processes
 ```
 
-##### Process Management
+###### Process Management
 - Uses process groups (PGID) for proper cleanup
 - SIGTERM signals for graceful termination
 - Automatic cleanup of orphaned processes
 
-#### 4. **Execution Flow**
+##### 4. **Execution Flow**
 
 1. **Request Processing**
    - Validates language support
@@ -91,9 +190,9 @@ ulimit -u 40    # Process limit: 40 processes
    - Deletes user and all associated files
    - Releases system resources
 
-### Utility Functions (`utils.ts`)
+#### Utility Functions (`utils.ts`)
 
-#### 1. **Semaphore Class**
+##### 1. **Semaphore Class**
 ```typescript
 class Semaphore {
   private max: number;
@@ -105,7 +204,7 @@ class Semaphore {
 - Ensures thread-safe operations
 - Maximum concurrency: 1 operation at a time
 
-#### 2. **Core Functions**
+##### 2. **Core Functions**
 
 **`execShellCommand(cmd: string)`**
 - Executes shell commands with 10-second timeout
@@ -127,43 +226,43 @@ class Semaphore {
 - Ensures complete process termination
 - Prevents zombie processes
 
-### Language-Specific Execution
+#### Language-Specific Execution
 
-#### JavaScript
+##### JavaScript
 ```bash
 # File: script.js
 node script.js
 ```
 
-#### Python
+##### Python
 ```bash
 # File: script.py
 python3 script.py
 ```
 
-#### C++
+##### C++
 ```bash
 # File: program.cpp
 g++ -o program program.cpp
 ./program
 ```
 
-#### Java
+##### Java
 ```bash
 # File: Main.java
 javac Main.java
 java -cp /temp Main
 ```
 
-## 🐳 Docker Configuration
+### 🐳 Advanced Docker Configuration
 
-### Container Setup
+#### Container Setup
 ```dockerfile
 FROM node:24-alpine
 RUN apk add --no-cache sudo shadow python3 openjdk17 gcc g++ musl-dev
 ```
 
-### Docker Compose
+#### Docker Compose Configuration
 ```yaml
 services:
   code-execution-server:
@@ -174,106 +273,25 @@ services:
     security_opt: [seccomp:unconfined]
 ```
 
-### Security Features
+#### Security Features
 - **Privileged Mode**: Required for user creation
 - **SYS_ADMIN Capability**: Process management
 - **Unconfined Seccomp**: Allows system calls
 - **Volume Mounts**: Docker socket and temp directory
 
-## 🔒 Security Measures
+### 📊 System Architecture Diagrams
 
-### 1. **User Isolation**
-- Each execution runs under a unique user
-- No shared resources between executions
-- Automatic user cleanup
-
-### 2. **Resource Limits**
-- CPU time: 10 seconds maximum
-- Process count: 40 processes maximum
-- Memory limits enforced by ulimit
-
-### 3. **Process Management**
-- Process group isolation
-- Graceful termination with SIGTERM
-- Automatic cleanup of orphaned processes
-
-### 4. **Error Handling**
-- Comprehensive try-catch blocks
-- Graceful error responses
-- Detailed error logging
-
-## 🚀 Deployment Architecture
-
-### Frontend Deployment
-- **Platform**: Vercel
-- **Domain**: Custom domain with SSL
-- **Features**: Automatic deployments, CDN
-
-### Backend Deployment
-- **Platform**: VPS (Virtual Private Server)
-- **Web Server**: Nginx with SSL certificates
-- **Container**: Docker with persistent storage
-- **Monitoring**: Process monitoring and logging
-
-## 📊 System Architecture Diagrams
-
-### Original Scalable Architecture
+#### Original Scalable Architecture
 ![Scalable Architecture](/frontend/public/scalable.png)
 
 *The original architecture was designed for high scalability with multiple containers and load balancing.*
 
-### Current Implementation
+#### Current Implementation
 ![Current Implementation](/frontend/public/small.png)
 
 *The current implementation focuses on simplicity and security with a single container approach.*
 
-## 🔧 API Documentation
-
-### Execute Code
-```http
-POST /api/execute
-Content-Type: application/json
-
-{
-  "code": "console.log('Hello World')",
-  "language": "javascript"
-}
-```
-
-**Response:**
-```json
-{
-  "output": "Hello World"
-}
-```
-
-**Error Response:**
-```json
-{
-  "error": "Unsupported language"
-}
-```
-
-## 🛠️ Development Setup
-
-### Backend Development
-```bash
-cd backend
-pnpm install
-pnpm dev
-```
-
-### Docker Development
-```bash
-docker-compose up --build
-```
-
-### Production Deployment
-```bash
-./start-docker.sh
-```
-
-## 📝 Implementation Notes
+### 📝 Implementation Notes
 
 The backend implementation prioritizes:
 
@@ -282,14 +300,14 @@ The backend implementation prioritizes:
 3. **Scalability**: Thread-safe operations with semaphores
 4. **Maintainability**: Clean code structure and documentation
 
-### Key Design Decisions
+#### Key Design Decisions
 
 1. **Single Container Approach**: Simplified deployment and maintenance
 2. **User-based Isolation**: Better security than container-per-execution
 3. **Resource Limits**: Prevents abuse and ensures fair usage
 4. **Automatic Cleanup**: Prevents resource leaks
 
-## 🎯 Technology Stack
+### 🎯 Technology Stack
 
 - **Backend**: Express.js, TypeScript, Node.js 24
 - **Frontend**: Next.js, TypeScript, Monaco Editor
@@ -298,12 +316,21 @@ The backend implementation prioritizes:
 - **Infrastructure**: Nginx, SSL certificates
 - **Languages**: JavaScript, Python, C++, Java
 
-## 🔗 Links
+</details>
 
-- **Live Demo**: [Code Execution Platform](https://code-execution.bhaveshsinghal.xyz)
-- **GitHub Repository**: [Backend Code](https://github.com/bhaveshsinghal95182/code-execution-backend)
-- **API Endpoint**: `https://server.bhaveshsinghal.xyz/api/execute`
+## 🔗 Important Links
+
+- **🌐 Live Demo**: [Code Execution Platform](https://code-execution.bhaveshsinghal.xyz)
+- **📂 GitHub Repository**: [Backend Code](https://github.com/bhaveshsinghal95182/code-execution-backend)
+- **🔌 API Endpoint**: `https://server.bhaveshsinghal.xyz/api/execute`
+- **📮 Postman Collections**: Available in `/backend` directory
 
 ---
 
+<div align="center">
+
+**⭐ If you found this project helpful, please give it a star! ⭐**
+
 *This project demonstrates a secure, scalable approach to code execution with proper isolation, resource management, and error handling.*
+
+</div>
