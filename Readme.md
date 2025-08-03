@@ -110,6 +110,276 @@ The platform follows a microservices architecture with the following components:
 - **Security**: User isolation and resource limits
 - **Deployment**: VPS with Nginx and SSL
 
+## 🔒 Security Features
+
+### 1. **User Isolation**
+- Each execution runs under a unique user (`exec_${uuid}`)
+- No shared resources between executions
+- Automatic user cleanup after execution
+
+### 2. **Resource Limits**
+- **CPU Time**: 10 seconds maximum per execution
+- **Process Count**: Maximum 40 processes per user
+- **Memory**: Controlled via ulimit constraints
+
+### 3. **Process Management**
+- Process group isolation (PGID)
+- Graceful termination with SIGTERM
+- Automatic cleanup of orphaned processes
+
+### 4. **Container Security**
+- Privileged mode for controlled user creation
+- SYS_ADMIN capability for process management
+- Unconfined seccomp for required system calls
+
+## 📚 API Documentation
+
+### Execute Code Endpoint
+
+**POST** `/api/execute`
+
+Execute code in supported programming languages with automatic isolation and cleanup.
+
+#### Request
+```http
+POST /api/execute
+Content-Type: application/json
+
+{
+  "code": "console.log('Hello World')",
+  "language": "javascript"
+}
+```
+
+#### Supported Languages
+- `javascript` - Node.js execution
+- `python` - Python 3 execution  
+- `cpp` - GCC compilation and execution
+- `java` - OpenJDK 17 compilation and execution
+
+#### Success Response
+```json
+{
+  "output": "Hello World"
+}
+```
+
+#### Error Response
+```json
+{
+  "error": "Unsupported language"
+}
+```
+
+#### Example Usage
+
+**JavaScript**
+```bash
+curl -X POST http://localhost:3000/api/execute \
+  -H "Content-Type: application/json" \
+  -d '{"code": "console.log(\"Hello from Node.js\")", "language": "javascript"}'
+```
+
+**Python**
+```bash
+curl -X POST http://localhost:3000/api/execute \
+  -H "Content-Type: application/json" \
+  -d '{"code": "print(\"Hello from Python\")", "language": "python"}'
+```
+
+**C++**
+```bash
+curl -X POST http://localhost:3000/api/execute \
+  -H "Content-Type: application/json" \
+  -d '{"code": "#include<iostream>\nint main(){std::cout<<\"Hello from C++\";return 0;}", "language": "cpp"}'
+```
+
+**Java**
+```bash
+curl -X POST http://localhost:3000/api/execute \
+  -H "Content-Type: application/json" \
+  -d '{"code": "public class Main{public static void main(String[] args){System.out.println(\"Hello from Java\");}}", "language": "java"}'
+```
+
+## 🐳 Docker Setup
+
+### Using Docker Compose (Recommended)
+```bash
+# Start all services
+docker-compose up --build
+
+# Run in background
+docker-compose up --build -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### Manual Docker Build
+```bash
+# Build backend image
+docker build -t code-execution-backend ./backend
+
+# Run container
+docker run -d \
+  --name code-exec-server \
+  -p 3000:3000 \
+  --privileged \
+  --cap-add=SYS_ADMIN \
+  --security-opt seccomp=unconfined \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v /tmp:/tmp \
+  code-execution-backend
+```
+
+### Docker Configuration
+```yaml
+services:
+  code-execution-server:
+    build: ./backend
+    ports: ["3000:3000"]
+    privileged: true           # Required for user creation
+    cap_add: [SYS_ADMIN]      # Process management
+    security_opt: [seccomp:unconfined]  # System calls
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /tmp:/tmp
+```
+
+## 🛠️ Development
+
+### Backend Development
+```bash
+cd backend
+npm install           # Install dependencies
+npm run dev          # Start development server
+npm run build        # Build for production
+npm start            # Start production server
+```
+
+### Frontend Development
+```bash
+cd frontend
+npm install          # Install dependencies
+npm run dev         # Start development server
+npm run build       # Build for production
+npm start           # Start production server
+```
+
+### Available Scripts
+
+#### Backend
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Compile TypeScript to JavaScript
+- `npm start` - Start production server
+
+#### Frontend  
+- `npm run dev` - Start Next.js development server
+- `npm run build` - Build optimized production bundle
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+
+### Development Tools
+- **TypeScript**: Type safety and better development experience
+- **TSX**: Fast TypeScript execution for development
+- **Monaco Editor**: VS Code-like code editor in the browser
+- **Tailwind CSS**: Utility-first CSS framework
+
+## 🌐 Deployment
+
+### Frontend Deployment (Vercel)
+The frontend is deployed on Vercel with automatic deployments from the main branch.
+
+**Live URL**: [code-execution.bhaveshsinghal.xyz](https://code-execution.bhaveshsinghal.xyz)
+
+### Backend Deployment (VPS)
+The backend is deployed on a Virtual Private Server with the following setup:
+
+**Server**: `https://server.bhaveshsinghal.xyz/api/execute`
+
+#### Production Setup
+1. **Web Server**: Nginx with SSL certificates
+2. **Container**: Docker with security constraints
+3. **Process Management**: Systemd service
+4. **Monitoring**: Docker logs and system monitoring
+
+#### Deployment Steps
+```bash
+# Clone repository on server
+git clone https://github.com/bhaveshsinghal95182/code-execution-backend.git
+cd code-execution-backend
+
+# Start production services
+./start-docker.sh
+
+# Monitor logs
+docker logs -f code-exec-server
+```
+
+## 🤝 Contributing
+
+We welcome contributions to the Code Execution Platform! Here's how you can help:
+
+### Getting Started
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -m 'Add some amazing feature'`)
+5. Push to the branch (`git push origin feature/amazing-feature`)
+6. Open a Pull Request
+
+### Development Guidelines
+- Follow the existing code style and conventions
+- Write clear commit messages
+- Add comments for complex logic
+- Test your changes thoroughly
+- Update documentation if needed
+
+### Reporting Issues
+If you find a bug or have a feature request:
+1. Check existing issues first
+2. Create a detailed issue with steps to reproduce
+3. Include system information and error messages
+4. Add labels to help categorize the issue
+
+### Security Considerations
+When contributing to security-related features:
+- Follow the principle of least privilege
+- Test isolation and resource limits thoroughly
+- Document security implications of changes
+- Consider attack vectors and edge cases
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2024 Bhavesh Singhal
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
 ---
 
 ## 📚 Technical Documentation
